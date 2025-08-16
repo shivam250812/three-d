@@ -78,45 +78,13 @@ import * as THREE from 'three';
 import { motion } from 'framer-motion';
 
 const Model = () => {
-  const [hasError, setHasError] = useState<boolean>(false);
-  let gltf;
-  
-  try {
-    gltf = useGLTF('/models/model.glb');
-  } catch (error) {
-    console.error('Error loading GLB model:', error);
-    if (!hasError) {
-      setHasError(true);
-    }
-  }
-  
-  useEffect(() => {
-    if (gltf?.scene) {
-      console.log('Model loaded successfully:', gltf.scene);
-      gltf.scene.traverse((child) => {
-        if ((child as THREE.Mesh).isMesh) {
-          const mesh = child as THREE.Mesh;
-          if (mesh.material) {
-            (mesh.material as THREE.MeshStandardMaterial).color.set('white');
-            (mesh.material as THREE.MeshStandardMaterial).metalness = 1.0;
-            (mesh.material as THREE.MeshStandardMaterial).roughness = 0.45;
-          }
-        }
-      });
-    }
-  }, [gltf?.scene]);
-
-  if (hasError || !gltf?.scene) {
-    // Fallback: render a simple cube instead
-    return (
-      <mesh position={[0, -2.5, 0]} scale={1.5}>
-        <boxGeometry args={[2, 2, 2]} />
-        <meshStandardMaterial color="white" metalness={1.0} roughness={0.45} />
-      </mesh>
-    );
-  }
-
-  return <primitive object={gltf.scene} scale={1.5} position={[0, -2.5, 0]} />;
+  // Simple fallback cube for now
+  return (
+    <mesh position={[0, -2.5, 0]} scale={1.5}>
+      <boxGeometry args={[2, 2, 2]} />
+      <meshStandardMaterial color="white" metalness={1.0} roughness={0.45} />
+    </mesh>
+  );
 };
 
 // Alternative Model component using manual loading
