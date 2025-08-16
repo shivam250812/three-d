@@ -12,6 +12,15 @@ type Product = {
   image: string;
 };
 
+// Define a type for the drag-and-drop card
+type DragDrop = {
+  id: string;
+  type: 'dnd';
+};
+
+// Create a union type that can be either a Product or a DragDrop card
+type SlideItem = Product | DragDrop;
+
 const products: Product[] = [
   { id: 'prod1', title: 'Spherical Joint', specs: ['Material: Steel, Stainless Steel'], image: 'https://placehold.co/400x400/e2e8f0/4a5568.png?text=Joint' },
   { id: 'prod2', title: 'Mounting Plate', specs: ['Material: Steel, Aluminum'], image: 'https://placehold.co/400x400/cbd5e0/4a5568.png?text=Plate' },
@@ -37,13 +46,18 @@ const PopularDetailsSection = () => {
     exit: { opacity: 0, y: -40 },
   };
 
-  const pageOneItems = products.slice(0, 3);
-  const pageTwoItems = [
+  const pageOneItems: SlideItem[] = products.slice(0, 3);
+  const pageTwoItems: SlideItem[] = [
     ...products.slice(3, 5),
     { id: 'drag-drop', type: 'dnd' }
   ];
 
   const itemsToShow = page === 0 ? pageOneItems : pageTwoItems;
+
+  // Type guard to check if an item is a DragDrop card
+  function isDragDrop(item: SlideItem): item is DragDrop {
+    return (item as DragDrop).type === 'dnd';
+  }
 
   return (
     <section className="py-24 bg-gray-50">
@@ -63,7 +77,7 @@ const PopularDetailsSection = () => {
                 exit="exit"
                 transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
               >
-                {item.type === 'dnd' ? <DragDropCard /> : <ProductCard product={item as Product} />}
+                {isDragDrop(item) ? <DragDropCard /> : <ProductCard product={item} />}
               </motion.div>
             ))}
           </AnimatePresence>
