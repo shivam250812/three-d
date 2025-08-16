@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import { motion } from 'framer-motion';
 
 const Model = () => {
-  const { scene } = useGLTF('/models/texture.exr');
+  const { scene } = useGLTF('/models/model.glb');
 
   useEffect(() => {
     scene.traverse((child) => {
