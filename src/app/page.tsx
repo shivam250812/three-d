@@ -1,103 +1,101 @@
-import Image from "next/image";
+"use client";
+
+import { Suspense, useEffect, useRef, useState } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Environment, useGLTF, Preload, PerformanceMonitor } from '@react-three/drei';
+import * as THREE from 'three';
+import { useAnimationStore } from '@/lib/store';
+
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import VideoSection from "@/components/VideoSection";
+import RevolutionizingSection from "@/components/RevolutionizingSection";
+import HowItWorksSection from "@/components/HowItWorksSection";
+import PopularDetailsSection from "@/components/PopularDetailsSection";
+import Footer from "@/components/Footer";
+
+const Model = () => {
+  const { scene } = useGLTF('/models/model.glb');
+  const { activeSection } = useAnimationStore();
+  const groupRef = useRef<THREE.Group>(null!);
+
+  const targetStates = {
+    hero: { position: new THREE.Vector3(0, -2.5, 0), rotation: new THREE.Euler(0, 0, 0) },
+    details: { position: new THREE.Vector3(-5, 0, 10), rotation: new THREE.Euler(0.5, 0.8, 0) },
+  };
+
+  useFrame(() => {
+    if (!groupRef.current) return;
+    const target = targetStates[activeSection];
+    groupRef.current.position.lerp(target.position, 0.05);
+    const targetQuaternion = new THREE.Quaternion().setFromEuler(target.rotation);
+    groupRef.current.quaternion.slerp(targetQuaternion, 0.05);
+    if (activeSection === 'hero') {
+      groupRef.current.rotation.y += 0.001;
+    }
+  });
+  
+  useEffect(() => {
+    scene.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        const mesh = child as THREE.Mesh;
+        (mesh.material as THREE.MeshStandardMaterial).color.set('white');
+        (mesh.material as THREE.MeshStandardMaterial).metalness = 1.0;
+        (mesh.material as THREE.MeshStandardMaterial).roughness = 0.45;
+      }
+    });
+  }, [scene]);
+
+  return <primitive ref={groupRef} object={scene} scale={1.5} />;
+};
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  // This state will track if the performance is poor
+  const [isLagging, setIsLagging] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  return (
+    <main>
+      <div className="fixed top-0 left-0 w-full h-screen -z-10">
+        <Canvas camera={{ position: [0, 0, 25], fov: 45 }}>
+          {/* This component will now set isLagging to true if performance drops.
+            onIncline is called when performance recovers.
+          */}
+          <PerformanceMonitor onDecline={() => setIsLagging(true)} onIncline={() => setIsLagging(false)} />
+
+          <color attach="background" args={['#ffffff']} />
+          <ambientLight intensity={1.5} />
+          <directionalLight position={[5, 15, 5]} intensity={1} />
+          <Suspense fallback={null}>
+            <Model />
+            
+            {/* This is the key change:
+              - If not lagging, we use the high-quality (but expensive) .exr reflections.
+              - If lagging, we switch to a much simpler and faster preset environment.
+            */}
+            {isLagging ? (
+              <Environment preset="city" />
+            ) : (
+              <Environment files="/models/texture.exr" />
+            )}
+            
+            <Preload all />
+          </Suspense>
+        </Canvas>
+      </div>
+      
+      <Navbar />
+      <HeroSection />
+      <VideoSection />
+      <section id="story-section">
+        <RevolutionizingSection />
+      </section>
+      <section id="tool-library-section">
+        <HowItWorksSection />
+      </section>
+      <section id="manufacture-section">
+        <PopularDetailsSection />
+      </section>
+      <Footer />
+    </main>
   );
 }

@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Forge - 3D Landing Page Replica
+This project is a high-fidelity, pixel-perfect replica of a modern landing page for a CNC manufacturing company called "Forge." The design was sourced from a video and has been meticulously recreated using a modern frontend stack.
 
-## Getting Started
+The primary goal of this project was to demonstrate proficiency in advanced frontend technologies, including 3D rendering with React Three Fiber, complex scroll-based animations, and responsive, component-based architecture with Next.js.
 
-First, run the development server:
+Live Demo: your-project-name.vercel.app (Replace with your Vercel deployment link)
 
-```bash
+✨ Key Features
+Pixel-Perfect Replication: The layout, typography, spacing, and colors have been carefully matched to the original design video.
+
+Interactive 3D Hero Section: A stunning hero section featuring a 3D model with a realistic metallic texture, animated and rendered in real-time using React Three Fiber.
+
+Advanced Scroll Animations: As the user scrolls, the 3D model dynamically animates to new positions, creating a seamless and engaging parallax effect.
+
+Automatic Carousel: The "Most Popular Details" section features an automatic, looping carousel that animates smoothly, built with Framer Motion.
+
+Fully Responsive Design: The entire landing page is fully responsive and optimized for a seamless experience across desktops, tablets, and mobile devices.
+
+Performance Optimized: The 3D scene includes advanced performance monitoring that automatically adjusts render quality to ensure a smooth frame rate on all devices.
+
+🛠️ Tech Stack
+This project was built using a modern, type-safe, and performant technology stack:
+
+Framework: Next.js (with App Router)
+
+Language: TypeScript
+
+Styling: Tailwind CSS
+
+3D Rendering: React Three Fiber & Drei
+
+Animation: Framer Motion
+
+State Management: Zustand (for global animation state)
+
+Scroll Detection: React Intersection Observer
+
+Deployment: Vercel
+
+🚀 Getting Started
+To run this project locally, follow these steps:
+
+Clone the repository:
+
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+
+Install dependencies:
+
+npm install
+
+Place 3D Assets:
+Make sure you have the model.glb and texture.exr files placed inside the public/models/ directory.
+
+Run the development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+📂 Project Structure
+The project follows the standard Next.js App Router structure:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+.
+├── public/
+│   └── models/       # Contains the .glb and .exr 3D assets
+├── src/
+│   ├── app/          # Main page routes and global layout
+│   ├── components/   # All reusable React components
+│   └── lib/          # Utility files, like the Zustand store
+├── next.config.mjs
+├── package.json
+└── README.md
