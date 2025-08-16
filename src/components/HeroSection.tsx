@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import { motion } from 'framer-motion';
 
 const Model = () => {
-  const { scene } = useGLTF('/models/model.glb');
+  const { scene } = useGLTF('/models/forest.exr');
 
   useEffect(() => {
     scene.traverse((child) => {
@@ -66,6 +66,6 @@ const HeroSection = () => {
   );
 };
 
-useGLTF.preload('/models/model.glb');
+useGLTF.preload('/models/landing_page_motor.glb');
 
 export default HeroSection;
