@@ -116,8 +116,23 @@ import { useState, useEffect, memo } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Define proper types
+interface Product {
+  id: string;
+  title: string;
+  specs: string[];
+  image: string;
+}
+
+interface DragDropItem {
+  id: string;
+  type: 'dnd';
+}
+
+type SlideItem = Product | DragDropItem;
+
 // --- Data remains the same ---
-const products = [
+const products: Product[] = [
   { id: 'prod1', title: 'Spherical Joint', specs: ['Material: Steel, Stainless Steel'], image: 'https://placehold.co/400x400/e2e8f0/4a5568.png?text=Joint' },
   { id: 'prod2', title: 'Mounting Plate', specs: ['Material: Steel, Aluminum'], image: 'https://placehold.co/400x400/cbd5e0/4a5568.png?text=Plate' },
   { id: 'prod3', title: 'Multi-Pin Enclosure', specs: ['Material: Plastic, Metal'], image: 'https://placehold.co/400x400/b2f5ea/4a5568.png?text=Enclosure' },
@@ -125,13 +140,12 @@ const products = [
   { id: 'prod5', title: 'Adapter Flange', specs: ['Material: Aluminum 6061'], image: 'https://placehold.co/400x400/fefcbf/4a5568.png?text=Flange' }
 ];
 
-const allSlides = [
+const allSlides: SlideItem[] = [
     ...products,
     { id: 'drag-drop', type: 'dnd' as const }
 ];
 const itemsPerPage = 3;
 const numPages = Math.ceil(allSlides.length / itemsPerPage);
-
 
 const PopularDetailsOverlapping = () => {
   const [page, setPage] = useState(0);
@@ -159,29 +173,28 @@ const PopularDetailsOverlapping = () => {
     <section className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center items-center mt-1 mb-8">
-  <button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 
-    hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 
-    dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-    Manufacture
-  </button>
-</div>
+          <button type="button" className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 
+            hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 
+            dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+            Manufacture
+          </button>
+        </div>
 
         <div className="text-center mb-8">
-        {/* Line 1 */}
-        <p className="text-5xl font-bold">
-          The Most Popular
-        </p>
+          {/* Line 1 */}
+          <p className="text-5xl font-bold">
+            The Most Popular
+          </p>
 
-        {/* Line 2 */}
-        <p className="text-5xl font-bold">
-          <span className="italic font-serif bg-clip-text text-transparent bg-gradient-to-r from-gray-100 via-gray-400 to-gray-700 [text-shadow:1px_1px_2px_rgba(0,0,0,0.5)]">
-            Details
-          </span>{' '}
-          We Produce
-        </p>
-      </div>
+          {/* Line 2 */}
+          <p className="text-5xl font-bold">
+            <span className="italic font-serif bg-clip-text text-transparent bg-gradient-to-r from-gray-100 via-gray-400 to-gray-700 [text-shadow:1px_1px_2px_rgba(0,0,0,0.5)]">
+              Details
+            </span>{' '}
+            We Produce
+          </p>
+        </div>
 
-        
         {/* This container needs a fixed height and relative positioning to contain the overlapping cards */}
         <div className="mt-16 relative h-[450px]">
           <AnimatePresence>
@@ -198,7 +211,7 @@ const PopularDetailsOverlapping = () => {
               {currentItems.map((item) => (
                 // These are now regular divs, not motion.divs
                 <div key={item.id}>
-                  {item.type === 'dnd' ? <DragDropCard /> : <ProductCard product={item as typeof products[0]} />}
+                  {item.type === 'dnd' ? <DragDropCard /> : <ProductCard product={item as Product} />}
                 </div>
               ))}
             </motion.div>
@@ -209,9 +222,8 @@ const PopularDetailsOverlapping = () => {
   );
 };
 
-// The ProductCard and DragDropCard components do not need any changes.
-// --- (Paste the memoized ProductCard and DragDropCard components here) ---
-const ProductCard = memo(function ProductCard({ product }: { product: any }) {
+// The ProductCard and DragDropCard components with proper types
+const ProductCard = memo(function ProductCard({ product }: { product: Product }) {
   return (
     <div className="bg-white h-full p-4 rounded-lg border border-gray-200 flex flex-col justify-between">
       <div>
@@ -236,6 +248,5 @@ const DragDropCard = memo(function DragDropCard() {
     </div>
   );
 });
-
 
 export default PopularDetailsOverlapping;
