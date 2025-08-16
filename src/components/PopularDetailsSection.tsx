@@ -54,11 +54,6 @@ const PopularDetailsSection = () => {
 
   const itemsToShow = page === 0 ? pageOneItems : pageTwoItems;
 
-  // Type guard to check if an item is a DragDrop card
-  function isDragDrop(item: SlideItem): item is DragDrop {
-    return (item as DragDrop).type === 'dnd';
-  }
-
   return (
     <section className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,7 +72,8 @@ const PopularDetailsSection = () => {
                 exit="exit"
                 transition={{ duration: 0.7, ease: [0.32, 0.72, 0, 1] }}
               >
-                {isDragDrop(item) ? <DragDropCard /> : <ProductCard product={item} />}
+                {/* FIXED: This robust check satisfies TypeScript and prevents build errors. */}
+                {'type' in item && item.type === 'dnd' ? <DragDropCard /> : <ProductCard product={item as Product} />}
               </motion.div>
             ))}
           </AnimatePresence>
