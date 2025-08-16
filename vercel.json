@@ -1,0 +1,18 @@
+{
+  "build": {
+    "env": {
+      "ENABLE_GIT_LFS": "true"
+    }
+  },
+  "headers": [
+    {
+      "source": "/models/(.*)\\.glb$",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "model/gltf-binary"
+        }
+      ]
+    }
+  ]
+}

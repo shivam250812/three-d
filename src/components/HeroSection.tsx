@@ -69,3 +69,5 @@ const HeroSection = () => {
 useGLTF.preload('/models/model.glb');
 
 export default HeroSection;
+
+
