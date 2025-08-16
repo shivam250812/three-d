@@ -70,7 +70,6 @@
 
 // export default HeroSection;
 
-
 "use client";
 import { Canvas } from '@react-three/fiber';
 import { Environment, useGLTF, OrbitControls } from '@react-three/drei';
@@ -79,32 +78,35 @@ import * as THREE from 'three';
 import { motion } from 'framer-motion';
 
 const Model = () => {
-  const [loadError, setLoadError] = useState<string | null>(null);
+  const [hasError, setHasError] = useState<boolean>(false);
+  let gltf;
   
   try {
-    const { scene } = useGLTF('/models/model.glb');
-    
-    useEffect(() => {
-      if (scene) {
-        console.log('Model loaded successfully:', scene);
-        scene.traverse((child) => {
-          if ((child as THREE.Mesh).isMesh) {
-            const mesh = child as THREE.Mesh;
-            if (mesh.material) {
-              (mesh.material as THREE.MeshStandardMaterial).color.set('white');
-              (mesh.material as THREE.MeshStandardMaterial).metalness = 1.0;
-              (mesh.material as THREE.MeshStandardMaterial).roughness = 0.45;
-            }
-          }
-        });
-      }
-    }, [scene]);
-
-    return <primitive object={scene} scale={1.5} position={[0, -2.5, 0]} />;
+    gltf = useGLTF('/models/model.glb');
   } catch (error) {
     console.error('Error loading GLB model:', error);
-    setLoadError(error instanceof Error ? error.message : 'Unknown error');
-    
+    if (!hasError) {
+      setHasError(true);
+    }
+  }
+  
+  useEffect(() => {
+    if (gltf?.scene) {
+      console.log('Model loaded successfully:', gltf.scene);
+      gltf.scene.traverse((child) => {
+        if ((child as THREE.Mesh).isMesh) {
+          const mesh = child as THREE.Mesh;
+          if (mesh.material) {
+            (mesh.material as THREE.MeshStandardMaterial).color.set('white');
+            (mesh.material as THREE.MeshStandardMaterial).metalness = 1.0;
+            (mesh.material as THREE.MeshStandardMaterial).roughness = 0.45;
+          }
+        }
+      });
+    }
+  }, [gltf?.scene]);
+
+  if (hasError || !gltf?.scene) {
     // Fallback: render a simple cube instead
     return (
       <mesh position={[0, -2.5, 0]} scale={1.5}>
@@ -113,6 +115,8 @@ const Model = () => {
       </mesh>
     );
   }
+
+  return <primitive object={gltf.scene} scale={1.5} position={[0, -2.5, 0]} />;
 };
 
 // Alternative Model component using manual loading
@@ -218,8 +222,7 @@ const HeroSection = () => {
             {/* Try the manual load first to debug */}
             <ModelWithManualLoad />
           </Suspense>
-          {/* Comment out the environment for now to isolate the GLB issue */}
-          {/* <Environment files="/models/texture.exr" /> */}
+          <Environment files="/models/texture.exr" />
           <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.4} enablePan={false} />
         </Canvas>
       </div>
