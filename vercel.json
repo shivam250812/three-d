@@ -1,9 +1,4 @@
 {
-  "build": {
-    "env": {
-      "ENABLE_GIT_LFS": "true"
-    }
-  },
   "headers": [
     {
       "source": "/models/(.*)\\.glb$",
@@ -11,6 +6,15 @@
         {
           "key": "Content-Type",
           "value": "model/gltf-binary"
+        }
+      ]
+    },
+    {
+      "source": "/models/(.*)\\.exr$",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/x-exr"
         }
       ]
     }
