@@ -131,6 +131,11 @@ interface DragDropItem {
 
 type SlideItem = Product | DragDropItem;
 
+// Type guard function to check if an item is a DragDropItem
+const isDragDropItem = (item: SlideItem): item is DragDropItem => {
+  return 'type' in item && item.type === 'dnd';
+};
+
 // --- Data remains the same ---
 const products: Product[] = [
   { id: 'prod1', title: 'Spherical Joint', specs: ['Material: Steel, Stainless Steel'], image: 'https://placehold.co/400x400/e2e8f0/4a5568.png?text=Joint' },
@@ -211,7 +216,7 @@ const PopularDetailsOverlapping = () => {
               {currentItems.map((item) => (
                 // These are now regular divs, not motion.divs
                 <div key={item.id}>
-                  {item.type === 'dnd' ? <DragDropCard /> : <ProductCard product={item as Product} />}
+                  {isDragDropItem(item) ? <DragDropCard /> : <ProductCard product={item} />}
                 </div>
               ))}
             </motion.div>
