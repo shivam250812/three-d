@@ -265,28 +265,28 @@ const RevolutionizingSection: React.FC = () => {
             </div>
             
               <motion.h1 
-  className="text-4xl md:text-5xl font-bold leading-tight text-black mb-8
+  className="text-4xl md:text-5xl font-bold leading-tight text-black mb-8"
   initial={{ opacity: 0, y: 50 }}
   whileInView={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.8, ease: "easeOut" }}
   viewport={{ once: false }}
 >
-              Revolutionizing<br />
-              Manufacturing with<br />
-              Speed and{" "}
-              <span
-                className="italic font-light"
-                style={{
-                  background: 'linear-gradient(135deg, #9ca3af 0%, #d1d5db 25%, #f3f4f6 50%, #d1d5db 75%, #9ca3af 100%)',
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                  color: 'transparent',
-                  fontFamily: 'Georgia, serif'
-                }}
-              >
-                Precision
-              </span>
-            </motion.h1>
+  Revolutionizing<br />
+  Manufacturing with<br />
+  Speed and{" "}
+  <span
+    className="italic font-light"
+    style={{
+      background: 'linear-gradient(135deg, #9ca3af 0%, #d1d5db 25%, #f3f4f6 50%, #d1d5db 75%, #9ca3af 100%)',
+      WebkitBackgroundClip: 'text',
+      backgroundClip: 'text',
+      color: 'transparent',
+      fontFamily: 'Georgia, serif'
+    }}
+  >
+    Precision
+  </span>
+</motion.h1>
           </div>
 
           {/* Features List */}
