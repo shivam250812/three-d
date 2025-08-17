@@ -84,7 +84,7 @@ import { Canvas } from '@react-three/fiber';
 import { Environment, useGLTF, OrbitControls } from '@react-three/drei';
 import { Suspense, useEffect } from 'react';
 import * as THREE from 'three';
-import { motion } from 'framer-motion';
+import { easeOut,motion } from 'framer-motion';
 
 const Model = () => {
   const { scene } = useGLTF('/models/model.glb');
