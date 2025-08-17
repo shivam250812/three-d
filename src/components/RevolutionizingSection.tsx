@@ -265,7 +265,7 @@ const RevolutionizingSection: React.FC = () => {
             </div>
             
               <motion.h2 
-  className="text-5xl md:text-7xl font-light leading-tight tracking-tight max-w-4xl mx-auto"
+  className="text-3xl md:text-4xl font-light leading-tight tracking-tight max-w-4xl mx-auto"
   initial={{ opacity: 0, y: 50 }}
   whileInView={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.8, ease: "easeOut" }}
