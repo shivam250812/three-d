@@ -119,11 +119,13 @@ const HeroSection = () => {
       </div>
 
       <div className="relative z-10 w-full">
-        <motion.h2 className="text-5xl md:text-7xl font-light leading-tight tracking-tight max-w-4xl mx-auto nitial={{ opacity: 0, y: 50 }}   
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: false }} 
-">
+        <motion.h2 
+  className="text-5xl md:text-7xl font-light leading-tight tracking-tight max-w-4xl mx-auto"
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  viewport={{ once: false }}
+>
           Precision <span className="chrome-text">CNC</span> Parts <br /> 
           Shipped as Fast as Tomorrow
         </motion.h2>
