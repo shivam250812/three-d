@@ -263,7 +263,13 @@ const RevolutionizingSection: React.FC = () => {
               <span className="text-xs">↗</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight text-black mb-8">
+              <motion.h2 
+  className="text-5xl md:text-7xl font-light leading-tight tracking-tight max-w-4xl mx-auto"
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+  viewport={{ once: false }}
+>
               Revolutionizing<br />
               Manufacturing with<br />
               Speed and{" "}
@@ -279,7 +285,7 @@ const RevolutionizingSection: React.FC = () => {
               >
                 Precision
               </span>
-            </h1>
+            </motion.h2>
           </div>
 
           {/* Features List */}
