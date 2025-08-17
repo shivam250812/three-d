@@ -215,7 +215,7 @@ const PopularDetailsOverlapping = () => {
               {currentItems.map((item) => (
                 // These are now regular divs, not motion.divs
                 <div key={item.id}>
-                  {item.type === 'dnd' ? <DragDropCard /> : <ProductCard product={item as Product} />}
+                  {'type' in item && item.type === 'dnd' ? <DragDropCard /> : <ProductCard product={item as Product} />}
                 </div>
               ))}
             </motion.div>
