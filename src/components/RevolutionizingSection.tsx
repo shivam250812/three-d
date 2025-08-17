@@ -164,7 +164,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { easeOut } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // Type definitions
 interface Feature {
