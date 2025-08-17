@@ -163,6 +163,7 @@
 "use client";
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 // Type definitions
 interface Feature {
@@ -296,9 +297,11 @@ const RevolutionizingSection: React.FC = () => {
 
           {/* Dynamic Feature Image - on left side */}
           <div className="mt-auto rounded-lg overflow-hidden bg-gradient-to-br from-blue-100 via-purple-50 to-blue-50 aspect-video flex items-center justify-center">
-            <img 
+            <Image 
               src={activeFeature.image} 
               alt={activeFeature.name}
+              width={600}
+              height={400}
               className="w-full h-full object-cover transition-all duration-300 ease-in-out"
             />
           </div>
@@ -317,7 +320,7 @@ const RevolutionizingSection: React.FC = () => {
             {/* Content */}
             <div className="text-black space-y-4 text-sm leading-relaxed font-normal flex-1">
               <p>
-                At Forge, we believe that getting custom CNC parts should be fast, reliable, and effortless. That's why we built a fully streamlined platform that turns your CAD files into production-ready parts—delivered in as fast as one day.
+                At Forge, we believe that getting custom CNC parts should be fast, reliable, and effortless. That&apos;s why we built a fully streamlined platform that turns your CAD files into production-ready parts—delivered in as fast as one day.
               </p>
               <p>
                 We operate high-performance CNC machines backed by in-house automation and a trusted network of suppliers. From one-off prototypes to small production runs, our system is built to deliver precise, high-quality parts with speed.
